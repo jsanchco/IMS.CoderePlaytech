@@ -40,8 +40,7 @@ namespace SGI.API
 
             services
                 .ConfigureRepositories(Configuration)
-                .ConfigureSupervisor()
-                //.ConfigureControllers()
+                .ConfigureServices()
                 .AddMiddleware()
                 .AddCorsConfiguration()
                 .AddConnectionProvider(Configuration)

@@ -6,6 +6,7 @@
     using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
@@ -24,9 +25,13 @@
     {
         private readonly IService _service;
         private readonly ILogger<AuthenticateController> _logger;
-        private readonly IOptions<JwtAppSettings> _config;
-
-        public AuthenticateController(ILogger<AuthenticateController> logger, IService service, IOptions<JwtAppSettings> config)
+        private readonly IConfiguration _configuration;    
+        
+        public AuthenticateController(
+            ILogger<AuthenticateController> logger, 
+            IService service,
+            IConfiguration configuration
+            )
         {
             _logger = logger ??
                 throw new ArgumentNullException(nameof(logger));
@@ -34,13 +39,13 @@
             _service = service ??
                 throw new ArgumentNullException(nameof(service));
 
-            _config = config ??
-                throw new ArgumentNullException(nameof(config));
+            _configuration = configuration ??
+                throw new ArgumentNullException(nameof(service));
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> Login(Login login)
+        [HttpPost("LoginInCodere")]
+        public async Task<IActionResult> LoginInCodere(Login login)
         {
             try
             {
@@ -67,8 +72,11 @@
 
         private string getToken(string id)
         {
+            var jwtSection = _configuration.GetSection("Jwt");
+            var jwtAppSettings = jwtSection.Get<JwtAppSettings>();
+
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_config.Value.SecretKey);
+            var key = Encoding.ASCII.GetBytes(jwtAppSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

@@ -15,8 +15,8 @@
         public static IServiceCollection AddConnectionProvider(this IServiceCollection services, IConfiguration configuration)
         {
             var infrastructureSection = configuration.GetSection("Infrastructure");
-            services.Configure<Infrastructure>(infrastructureSection);
-            var infrastructure = infrastructureSection.Get<Infrastructure>();
+            services.Configure<InfrastructureAppSettings>(infrastructureSection);
+            var infrastructure = infrastructureSection.Get<InfrastructureAppSettings>();
 
 //            services.AddDbContextPool<EFContextSQL>(options => options.UseSqlServer(infrastructure.ConnectionString));
 
