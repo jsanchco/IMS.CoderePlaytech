@@ -5,10 +5,10 @@
     using IMS.CoderePlaytech.Domain.Services;
     using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using Models;
     using System;
@@ -44,29 +44,58 @@
         }
 
         [AllowAnonymous]
+        [HttpGet("Login")]
+        public async Task<IActionResult> Login()
+        {
+            try
+            {
+                var codereAppSettings = _configuration
+                                            .GetSection("Codere")
+                                            .Get<CodereAppSettings>();
+                var url = $"{codereAppSettings.Domain}{codereAppSettings.ApiBase}";
+
+                var resultRequest = await _service.Login(url);
+
+                if (!resultRequest.isSuccessful)
+                {
+                    _logger.LogWarning($"Error in Login [{resultRequest.statusDescription}]");
+                    return StatusCode(resultRequest.statusCode, $"Error in Login [{resultRequest.statusDescription}]");
+                }
+
+                return Ok(resultRequest.data);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception: ");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
         [HttpPost("LoginInCodere")]
         public async Task<IActionResult> LoginInCodere(Login login)
         {
             try
             {
-                var userAuthenticate = await _service.Login(login.username, login.password);
+                var codereAppSettings = _configuration
+                                            .GetSection("Codere")
+                                            .Get<CodereAppSettings>();
+                var url = $"{codereAppSettings.Domain}{codereAppSettings.ApiBase}";
 
-                if (userAuthenticate == null)
+                var resultRequest = await _service.LoginInCodere(url, login.username, login.password);
+
+                if (!resultRequest.isSuccessful)
                 {
-                    _logger.LogWarning("Error in Authenticate: username [{Username}] not registered or incorrect password", login.username);
-                    return BadRequest(new { message = "Username or password is incorrect" });
+                    _logger.LogWarning($"Error in Login [{resultRequest.statusDescription}]");
+                    return StatusCode(resultRequest.statusCode, $"Error in Login [{resultRequest.statusDescription}]");
                 }
 
-                return new ObjectResult(new Session
-                {
-                    user = userAuthenticate,
-                    token = getToken(userAuthenticate.name.ToString())
-                });
+                return Ok(resultRequest.data);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception: ");
-                return StatusCode(500, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 

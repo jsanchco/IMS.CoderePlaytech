@@ -12,7 +12,14 @@
     {
         #region Authenticate
 
-        Task<UserViewModel> Login(string user, string password, CancellationToken ct = default);
+        Task<ResultRequest<UserToLoginJson>> Login(string url, CancellationToken ct = default);
+        Task<ResultRequest<UserToLoginJson>> LoginInCodere(string url, string user, string password, CancellationToken ct = default);
+
+        #endregion
+
+        #region Barcode
+
+        Task<ResultRequest<string>> GenDepositBarcode(string url, string user, CancellationToken ct = default);
 
         #endregion
     }
