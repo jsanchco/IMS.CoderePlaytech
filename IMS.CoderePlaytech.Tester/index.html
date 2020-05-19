@@ -59,13 +59,13 @@
                     Execute
                   </button>
                 </td>
-                <td id="result-gendepositbarcode" class="align-middle"></td>
+                <td id="result-gendepositbarcode" class="align-middle">waiting...</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="col text-center align-middle">
-          <iframe id="result-action" src="Barcode.html" frameBorder="0">
+        <div class="col text-center align-middle mt-3">
+          <iframe id="result-action" src="Barcode.html" frameBorder="0" width="80%">
             <p>Your browser does not support iframes.</p>
           </iframe>
         </div>
@@ -95,6 +95,8 @@
     <script type="text/javascript">
       $(document).ready(function () {
         $("#btn-gendepositbarcode").click(function () {
+          $("#result-gendepositbarcode").html("loading...");
+
           let url =
             "https://localhost:44335/api/Barcode/GenDepositBarcode?user=olgatest";
           $.ajax({

@@ -53,7 +53,7 @@
 
         private async Task<string> GetTemplateBarcode(string reference)
         {
-            var path = "assets/templates/Barcode.html";
+            var path = "assets/templates/Barcode.htmls";
             if (!File.Exists(path))
                 throw new Exception($"File not found ('{path}')");
 
