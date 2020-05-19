@@ -3,7 +3,6 @@
     #region Using
 
     using IMS.CoderePlaytech.Domain.Services;
-    using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;

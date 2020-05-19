@@ -3,16 +3,13 @@
     #region Using
 
     using IMS.CoderePlaytech.Domain.Services;
+    using IMS.CoderePlaytech.Services.ServiceCodereThroughApi;
     using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
     using System.Text;
 
     #endregion

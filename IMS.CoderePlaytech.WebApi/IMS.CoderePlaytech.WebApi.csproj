@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IMS.CoderePlaytech.Domain\IMS.CoderePlaytech.Domain.csproj" />
+    <ProjectReference Include="..\IMS.CoderePlaytech.Services.ServiceCodereThroughApi\IMS.CoderePlaytech.Services.ServiceCodereThroughApi.csproj" />
   </ItemGroup>
 
 
