@@ -31,7 +31,9 @@
 
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<IService, Service>();
+            services
+                .AddScoped<IService, Service>()
+                .AddScoped<IServiceCodere, ServiceCodereThroughApi>();
 
             return services;
         }

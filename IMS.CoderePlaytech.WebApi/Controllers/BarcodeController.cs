@@ -34,7 +34,7 @@
                 throw new ArgumentNullException(nameof(service));
 
             _configuration = configuration ??
-                throw new ArgumentNullException(nameof(service));
+                throw new ArgumentNullException(nameof(configuration));
         }
 
         [HttpGet("GenDepositBarcode")]
@@ -42,12 +42,7 @@
         {
             try
             {
-                var codereAppSettings = _configuration
-                                            .GetSection("Codere")
-                                            .Get<CodereAppSettings>();
-                var url = $"{codereAppSettings.Domain}{codereAppSettings.ApiBase}";
-
-                var resultRequest = await _service.GenDepositBarcode(url, user);
+                var resultRequest = await _service.GenDepositBarcode(user);
 
                 if (!resultRequest.isSuccessful)
                 {

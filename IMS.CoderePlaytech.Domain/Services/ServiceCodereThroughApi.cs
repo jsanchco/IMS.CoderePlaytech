@@ -1,0 +1,92 @@
+﻿namespace IMS.CoderePlaytech.Domain.Services
+{
+    #region Using
+
+    using IMS.CoderePlaytech.Domain.Models;
+    using IMS.CoderePlaytech.WebApi.Helpers;
+    using Microsoft.Extensions.Configuration;
+    using RestSharp;
+    using System;
+    using System.IO;
+    using System.Text.Json;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    #endregion
+
+    public class ServiceCodereThroughApi : IServiceCodere
+    {
+        private readonly IConfiguration _configuration;
+
+        public ServiceCodereThroughApi(IConfiguration configuration)
+        {
+            _configuration = configuration ?? 
+                throw new ArgumentNullException(nameof(configuration));
+        }
+
+        public async Task<ResultRequest<string>> CreateDeposit(string username, CancellationToken ct = default)
+        {
+            var codereAppSettings = _configuration
+                            .GetSection("Codere")
+                            .Get<CodereAppSettings>();
+            var url = $"{codereAppSettings.Domain}{codereAppSettings.ApiBase}";
+            var parameters = $"nombre={username}";
+            url = $"{url}/account/CreateDeposit?{parameters}";
+            var restClient = new RestClient(url);
+            var restRequest = new RestRequest(Method.GET);
+            restRequest.AddHeader("Cookie", GetCookie());
+            var response = await restClient.ExecuteAsync(restRequest);
+
+            if (response.IsSuccessful)
+            {
+                var reference = JsonSerializer.Deserialize<string>(response.Content);
+                if (string.IsNullOrEmpty(reference))
+                    throw new Exception("Not value to TemplateBarcode");
+
+                var templateBarcode = await GetTemplateBarcode(reference);
+
+                return new ResultRequest<string>
+                {
+                    isSuccessful = response.IsSuccessful,
+                    statusCode = (int)response.StatusCode,
+                    statusDescription = response.StatusDescription,
+                    data = templateBarcode
+                };
+            }
+            else
+            {
+                return new ResultRequest<string>
+                {
+                    isSuccessful = response.IsSuccessful,
+                    statusCode = (int)response.StatusCode,
+                    statusDescription = response.StatusDescription,
+                    data = null
+                };
+            }
+        }
+
+        private async Task<string> GetTemplateBarcode(string reference)
+        {
+            var path = "assets/templates/Barcode.htmls";
+            if (!File.Exists(path))
+                throw new Exception($"File not found ('{path}')");
+
+            string result;
+            using (var reader = File.OpenText(path))
+            {
+                result = await reader.ReadToEndAsync();
+                result = result.Replace("<reference>", reference);
+            }
+
+            return result;
+        }
+
+        private string GetCookie()
+        {
+            var cookie = ".CodereApuestas=";
+            return string.Concat(
+                cookie,
+                "E530DDF8457D3F12615FEC3420F2A36181B08ED1B20C669DC3095FF9AA286A8E96E0BFCB2116E942AD91B6DFDB576826D6519C91C51E7997AF13C3299C14DBE23DFC414E5C71F792CE430EA6D9CA28A238E539FBA076CAB24CF3B5A79D0B3E0799CAF33691A14ABB80E6BB888268FAE603D0EEB7010756AF6F28AE42CD67846B1C977623A37C189F3A3F1CDF5FB7810B071CAD6B4B5F725BD41D51D1F489571FE098D6EC3B0FC9945F81D2F2F1A95B5B28454ADDC2BB98A1488F661D264A21504277B940C79A8E68DC49F3153EFE132CBDD549E439DF2F14FC8D903AA45009753CD2D62854C619996D145306BEC331FBF98A5B82241E180E054BD7DF5581BBC1761181131BECCA0A5835D07666E343031A58AE635F03AFB8AC9777C1C1D3B25E0F791BA235DB2C1E5D45AB70DF5EB030328A657AB5B46FB47270933363E563A1AE8BD31B1873FECEBF571DFE0EFA8DA92809619A6BA6D82527097DF187F124B618B04C39B53BAA8FC5BCCA9CFD3BC1AF2AEB54CC3F682A68D01CB9C9AA2F7DDB4422130AE7F20AFE1C3DA0D84235DC06CFCAF1CC8D7AF70A19EB16CD8FDD09B942402D09");
+        }
+    }
+}

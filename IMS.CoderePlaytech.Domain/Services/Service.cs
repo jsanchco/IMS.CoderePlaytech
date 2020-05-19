@@ -10,16 +10,21 @@
     public partial class Service : IService
     {
         private readonly IMapper _mapper;
+        private readonly IServiceCodere _serviceCodere;
 
         public Service()
         {
         }
 
         public Service(
-            IMapper mapper)
+            IMapper mapper,
+            IServiceCodere serviceCodere)
         {
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
+
+            _serviceCodere = serviceCodere ??
+                throw new ArgumentNullException(nameof(serviceCodere));
         }
     }
 }
