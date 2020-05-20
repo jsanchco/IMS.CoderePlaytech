@@ -1,12 +1,12 @@
 ﻿namespace SGI.API.Configurations
 {
-    
     #region Using
 
+    using IMS.CoderePlaytech.Infrastructure;
+    using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using IMS.CoderePlaytech.WebApi.Helpers;
 
     #endregion
 
@@ -18,7 +18,7 @@
             services.Configure<InfrastructureAppSettings>(infrastructureSection);
             var infrastructure = infrastructureSection.Get<InfrastructureAppSettings>();
 
-//            services.AddDbContextPool<EFContextSQL>(options => options.UseSqlServer(infrastructure.ConnectionString));
+            services.AddDbContextPool<EFContextSQL>(options => options.UseSqlServer(infrastructure.ConnectionString));
 
             return services;
         }

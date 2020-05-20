@@ -16,21 +16,21 @@
     [ApiController]
     public class BarcodeController : ControllerBase
     {
-        private readonly IService _service;
+        private readonly IServiceBarcode _serviceBarcode;
         private readonly ILogger<BarcodeController> _logger;
         private readonly IConfiguration _configuration;
 
         public BarcodeController(
              ILogger<BarcodeController> logger,
-             IService service,
+             IServiceBarcode serviceBarcode,
              IConfiguration configuration
             )
         {
             _logger = logger ??
                 throw new ArgumentNullException(nameof(logger));
 
-            _service = service ??
-                throw new ArgumentNullException(nameof(service));
+            _serviceBarcode = serviceBarcode ??
+                throw new ArgumentNullException(nameof(serviceBarcode));
 
             _configuration = configuration ??
                 throw new ArgumentNullException(nameof(configuration));
@@ -41,7 +41,7 @@
         {
             try
             {
-                var resultRequest = await _service.GenDepositBarcode(user);
+                var resultRequest = await _serviceBarcode.GenDepositBarcode(user);
 
                 if (!resultRequest.isSuccessful)
                 {

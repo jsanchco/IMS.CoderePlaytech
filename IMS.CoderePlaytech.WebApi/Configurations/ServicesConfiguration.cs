@@ -2,8 +2,10 @@
 {
     #region Using
 
+    using IMS.CoderePlaytech.Domain.Repositories;
     using IMS.CoderePlaytech.Domain.Services;
-    using IMS.CoderePlaytech.Services.ServiceCodereThroughApi;
+    using IMS.CoderePlaytech.Repositories.Infrastructure;
+    using IMS.CoderePlaytech.Services.ServiceBarcode;
     using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
@@ -16,12 +18,11 @@
 
     public static class ServicesConfiguration
     {
-        public static IServiceCollection ConfigureRepositories(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureRepositories(this IServiceCollection services)
         {
-            //services
-            //    .AddScoped<IUserRepository, UserRepository>()
-            //    .AddScoped<IRoleRepository, RoleRepository>()
-            //    .AddScoped<IAuthenticateRepository, AuthenticateRepository>();
+            services
+                .AddScoped<IRepositoryBarcode, RepositoryBarcode>()
+                .AddScoped<IRepositoryBarcodeType, RepositoryBarcodeType>();
 
             return services;
         }
@@ -29,8 +30,7 @@
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services
-                .AddScoped<IService, Service>()
-                .AddScoped<IServiceCodere, ServiceCodereThroughApi>();
+                .AddScoped<IServiceBarcode, ServiceBarcode>();
 
             return services;
         }

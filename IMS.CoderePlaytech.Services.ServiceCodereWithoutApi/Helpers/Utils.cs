@@ -1,4 +1,4 @@
-﻿namespace IMS.CoderePlaytech.Services.ServiceCodereWithoutApi.Helpers
+﻿namespace IMS.CoderePlaytech.Services.ServiceBarcode.Helpers
 {
     #region Using
 
@@ -11,7 +11,7 @@
     {
         private static Random random = new Random();
 
-        public static string RandomString()
+        public static string NewBarcode()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, 7)

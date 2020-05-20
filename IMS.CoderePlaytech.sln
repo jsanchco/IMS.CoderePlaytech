@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.WebApi",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.Domain", "IMS.CoderePlaytech.Domain\IMS.CoderePlaytech.Domain.csproj", "{9A2F8EAF-EFA8-4A46-A70D-CC05EAD9B60C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.CoderePlaytech.Services.ServiceCodereThroughApi", "IMS.CoderePlaytech.Services.ServiceCodereThroughApi\IMS.CoderePlaytech.Services.ServiceCodereThroughApi.csproj", "{94C413E3-7D7B-44B3-8FE7-BADB8E1E72F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.Services.ServiceBarcode", "IMS.CoderePlaytech.Services.ServiceCodereWithoutApi\IMS.CoderePlaytech.Services.ServiceBarcode.csproj", "{EC48E725-B66C-4291-BDFD-23EDADB38308}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.Services.ServiceCodere", "IMS.CoderePlaytech.Services.ServiceCodereWithoutApi\IMS.CoderePlaytech.Services.ServiceCodere.csproj", "{EC48E725-B66C-4291-BDFD-23EDADB38308}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.CoderePlaytech.Infrastructure", "IMS.CoderePlaytech.infrastructure\IMS.CoderePlaytech.Infrastructure.csproj", "{2A57B810-9F3F-4F41-A274-E51699496142}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{9A2F8EAF-EFA8-4A46-A70D-CC05EAD9B60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A2F8EAF-EFA8-4A46-A70D-CC05EAD9B60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A2F8EAF-EFA8-4A46-A70D-CC05EAD9B60C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94C413E3-7D7B-44B3-8FE7-BADB8E1E72F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94C413E3-7D7B-44B3-8FE7-BADB8E1E72F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94C413E3-7D7B-44B3-8FE7-BADB8E1E72F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94C413E3-7D7B-44B3-8FE7-BADB8E1E72F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC48E725-B66C-4291-BDFD-23EDADB38308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC48E725-B66C-4291-BDFD-23EDADB38308}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC48E725-B66C-4291-BDFD-23EDADB38308}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC48E725-B66C-4291-BDFD-23EDADB38308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A57B810-9F3F-4F41-A274-E51699496142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A57B810-9F3F-4F41-A274-E51699496142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A57B810-9F3F-4F41-A274-E51699496142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A57B810-9F3F-4F41-A274-E51699496142}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

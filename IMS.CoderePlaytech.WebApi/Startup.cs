@@ -39,7 +39,7 @@ namespace SGI.API
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             services
-                .ConfigureRepositories(Configuration)
+                .ConfigureRepositories()
                 .ConfigureServices()
                 .AddMiddleware()
                 .AddCorsConfiguration()

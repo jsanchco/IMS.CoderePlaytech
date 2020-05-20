@@ -8,8 +8,8 @@
 
     #endregion
 
-    public interface IServiceCodere
+    public interface IServiceBarcode
     {
-        Task<ResultRequest<string>> CreateDeposit(string username, CancellationToken ct = default);
+        Task<ResultRequest<string>> GenDepositBarcode(string user, CancellationToken ct = default);
     }
 }
