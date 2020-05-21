@@ -1,4 +1,4 @@
-namespace SGI.API
+namespace IMS.CoderePlaytech.PlaytechWebApi
 {
     #region Using
 

@@ -1,4 +1,4 @@
-﻿namespace SGI.API.Models
+﻿namespace IMS.CoderePlaytech.PlaytechWebApi.Models
 {
     #region Using
 
