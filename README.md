@@ -13,8 +13,6 @@
 - En **'Consola del Administrador de Paquetes'** establecer como **'Proyecto predeterminado'** en donde tengamos instanciados los repositorios. En nuestro caso **'IMS.CoderePlaytech.Infrastructure'**
 - Ejecutamos en **'Consola del Administrador de Paquetes'**  -> '***add-migration First_Migration -Context IMS.CoderePlaytech.Infrastructure.EFContextSQL'***
 - Se creará en **'IMS.CoderePlaytech.Infrastructure'** una carpeta en donde se estará la migración
-- Establecemos el entorno en el que se va a hacer la migración (en 'Consola del Administrador de Paquetes'): $env:ASPNETCORE_ENVIRONMENT='Development'  
-	                                        ó
-$env:ASPNETCORE_ENVIRONMENT='Production'
+- Establecemos el entorno en el que se va a hacer la migración (en 'Consola del Administrador de Paquetes'): $env:ASPNETCORE_ENVIRONMENT='Development' o $env:ASPNETCORE_ENVIRONMENT='Production'
 - Construimos la base de datos en donde haya indicado la cadena de conexión ejecutando en 'Consola del Administrador de Paquetes' ***'Update-Database -Context IMS.CoderePlaytech.Infrastructure.EFContextSQL'***
 - Si queremos eliminar la Migración, ejecutamos en  'Consola del Administrador de Paquetes'  ***'remove-migration -Context SGI.DataEFCoreMySQL.EFContextMySQL'***
