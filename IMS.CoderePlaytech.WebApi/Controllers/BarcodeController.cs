@@ -45,8 +45,8 @@
 
                 if (!resultRequest.isSuccessful)
                 {
-                    _logger.LogWarning($"Error in GenDepositBarcode [{resultRequest.statusDescription}]");
-                    return StatusCode(resultRequest.statusCode, $"Error in GenDepositBarcode [{resultRequest.statusDescription}]");
+                    _logger.LogWarning("Error in GenDepositBarcode");
+                    return StatusCode(StatusCodes.Status409Conflict, $"Error in GenDepositBarcode");
                 }
 
                 return Ok(resultRequest.data);

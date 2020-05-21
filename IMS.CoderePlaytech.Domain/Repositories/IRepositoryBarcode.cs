@@ -15,7 +15,7 @@
         bool BarcodeExists(string username, string code);
         Barcode GetByCode(string username, string code);
         IQueryable<Barcode> GetAll();
-        IQueryable<Barcode> GetByBarcodeType(int id);
+        IQueryable<Barcode> GetByBarcodeType(int typeId);
         Task<Barcode> GetByCodeAsync(string username, string code);
         Task<ResultTransaction<Barcode>> AddAsync(Barcode newBarcode);
         Task<bool> UpdateAsync(Barcode barcode);

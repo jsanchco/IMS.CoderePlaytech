@@ -4,25 +4,44 @@
 
     using IMS.CoderePlaytech.Domain.Entities;
     using IMS.CoderePlaytech.Domain.Repositories;
+    using IMS.CoderePlaytech.Infrastructure;
+    using System;
     using System.Linq;
 
     #endregion
 
-    public class RepositoryBarcodeType : IRepositoryBarcodeType
+    public class RepositoryBarcodeType : IRepositoryBarcodeType, IDisposable
     {
+        private readonly EFContextSQL _context;
+
+        public RepositoryBarcodeType(EFContextSQL context)
+        {
+            _context = context;
+        }
+
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
         }
 
         public IQueryable<BarcodeType> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.BarcodeTypes;
         }
 
         public BarcodeType GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.BarcodeTypes
+                 .FirstOrDefault(x => x.Id == id);
         }
     }
 }

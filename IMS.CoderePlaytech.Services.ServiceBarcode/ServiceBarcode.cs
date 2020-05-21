@@ -2,10 +2,12 @@
 {
     #region Using
 
+    using IMS.CoderePlaytech.Domain.Entities;
     using IMS.CoderePlaytech.Domain.Models;
     using IMS.CoderePlaytech.Domain.Repositories;
     using IMS.CoderePlaytech.Domain.Services;
     using IMS.CoderePlaytech.Services.ServiceBarcode.Helpers;
+    using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.Extensions.Configuration;
     using System;
     using System.Threading;
@@ -32,11 +34,28 @@
                 throw new ArgumentNullException(nameof(repositoryBarcodeType));
         }
 
-        public Task<ResultRequest<string>> GenDepositBarcode(string user, CancellationToken ct = default)
+        public async Task<ResultRequest<string>> GenDepositBarcode(string user, CancellationToken ct = default)
         {
             var barcode = Utils.NewBarcode();
+            while (_repositoryBarcode.BarcodeExists(user, barcode))
+            {
+                barcode = Utils.NewBarcode();
+            }
+            var expirationTimeSeconds = _configuration
+                .GetSection("BarcodeConfig")
+                .Get<BarcodeConfig>().ExpirationTimeSeconds;
+            var result = await _repositoryBarcode.AddAsync(new Barcode 
+            {
+                Username = user,
+                BarcodeTypeId = 1,
+                Code = barcode,
+                CreationDate = DateTime.Now,
+                ExpirationDate = DateTime.Now.AddSeconds(expirationTimeSeconds)
+            });
 
-            throw new Exception($"Not completed [{barcode}]");
+            return result.Result
+                ? new ResultRequest<string> { isSuccessful = true, data = result.Item.Code }
+                : new ResultRequest<string> { isSuccessful = false, data = null };
         }
     }
 }

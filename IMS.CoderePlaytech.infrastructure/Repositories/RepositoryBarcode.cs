@@ -5,56 +5,88 @@
     using IMS.CoderePlaytech.Domain.Entities;
     using IMS.CoderePlaytech.Domain.Models;
     using IMS.CoderePlaytech.Domain.Repositories;
+    using IMS.CoderePlaytech.Infrastructure;
+    using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     #endregion
 
-    public class RepositoryBarcode : IRepositoryBarcode
+    public class RepositoryBarcode : IRepositoryBarcode, IDisposable
     {
-        public Task<ResultTransaction<Barcode>> AddAsync(Barcode newBarcode)
-        {
-            throw new System.NotImplementedException();
-        }
+        private readonly EFContextSQL _context;
 
-        public bool BarcodeExists(string username, string code)
+        public RepositoryBarcode(EFContextSQL context)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(string username, string code)
-        {
-            throw new System.NotImplementedException();
+            _context = context;
         }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+        }
+        public async Task<ResultTransaction<Barcode>> AddAsync(Barcode newBarcode)
+        {
+            _context.Barcodes.Add(newBarcode);
+            return new ResultTransaction<Barcode> { Item = newBarcode, Result = await _context.SaveChangesAsync() > 0 };
+        }
+
+        public bool BarcodeExists(string username, string code)
+        {
+            return _context.Barcodes.FirstOrDefault(x => x.Username == username && x.Code == code) != null;
+        }
+
+        public async Task<bool> DeleteAsync(string username, string code)
+        {
+            var toRemove = await _context.Barcodes.FirstOrDefaultAsync(x => x.Username == username && x.Code == code);
+            if (toRemove == null)
+                return false;
+
+            _context.Barcodes.Remove(toRemove);
+            return (await _context.SaveChangesAsync()) > 0;
         }
 
         public IQueryable<Barcode> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.Barcodes
+                .Include(x => x.BarcodeType);
         }
 
-        public IQueryable<Barcode> GetByBarcodeType(int id)
+        public IQueryable<Barcode> GetByBarcodeType(int typeId)
         {
-            throw new System.NotImplementedException();
+            return _context.Barcodes
+                .Include(x => x.BarcodeType)
+                .Where(x => x.BarcodeTypeId == typeId);
         }
 
         public Barcode GetByCode(string username, string code)
         {
-            throw new System.NotImplementedException();
+            return _context.Barcodes
+                .Include(x => x.BarcodeType)
+                .FirstOrDefault(x => x.Username == username && x.Code == code);
         }
 
-        public Task<Barcode> GetByCodeAsync(string username, string code)
+        public async Task<Barcode> GetByCodeAsync(string username, string code)
         {
-            throw new System.NotImplementedException();
+            return await _context.Barcodes
+                .Include(x => x.BarcodeType)
+                .FirstOrDefaultAsync(x => x.Username == username && x.Code == code);
         }
 
-        public Task<bool> UpdateAsync(Barcode barcode)
+        public async Task<bool> UpdateAsync(Barcode barcode)
         {
-            throw new System.NotImplementedException();
+            _context.Barcodes.Update(barcode);
+            return (await _context.SaveChangesAsync()) > 0;
         }
     }
 }

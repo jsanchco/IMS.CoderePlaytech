@@ -10,13 +10,8 @@
         public string SecretKey { get; set; }
     }
 
-    public class CodereAppSettings
+    public class BarcodeConfig
     {
-        public string Domain { get; set; }
-        public string ApiBase { get; set; }
-        public string ApiReports { get; set; }
-        public string ApiTransactions { get; set; }
-        public string ConnectionString { get; set; }
-        public bool IsEncrypted { get; set; }
+        public int ExpirationTimeSeconds { get; set; }
     }
 }
