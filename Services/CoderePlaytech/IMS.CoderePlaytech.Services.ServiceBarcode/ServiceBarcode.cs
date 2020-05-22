@@ -53,8 +53,9 @@
                 ExpirationDate = DateTime.Now.AddSeconds(expirationTimeSeconds)
             });
 
+            var templateBarcode = await Utils.GetTemplateBarcode(barcode); 
             return result.Result
-                ? new ResultRequest<string> { isSuccessful = true, data = result.Item.Code }
+                ? new ResultRequest<string> { isSuccessful = true, data = templateBarcode }
                 : new ResultRequest<string> { isSuccessful = false, data = null };
         }
     }
