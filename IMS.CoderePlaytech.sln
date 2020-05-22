@@ -9,9 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.Infrastr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.Services.ServiceBarcode", "IMS.CoderePlaytech.Services.ServiceBarcode\IMS.CoderePlaytech.Services.ServiceBarcode.csproj", "{B07481BD-7204-48E9-BF75-4D70884C65E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.PlaytechWebApi", "IMS.CoderePlaytech.PlaytechWebApi\IMS.CoderePlaytech.PlaytechWebApi.csproj", "{D8A52CD4-1E02-4399-B1FA-4CB45642EB1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.API", "IMS.CoderePlaytech.PlaytechWebApi\IMS.CoderePlaytech.API.csproj", "{D8A52CD4-1E02-4399-B1FA-4CB45642EB1E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoderePlaytech.CajaCodereWebApi", "IMS.CoderePlaytech.CajaCodereWebApi\IMS.CoderePlaytech.CajaCodereWebApi.csproj", "{2601C13D-3CA8-42A9-AC77-BA349C116DC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CajaCodere.API", "IMS.CoderePlaytech.CajaCodereWebApi\IMS.CajaCodere.API.csproj", "{2601C13D-3CA8-42A9-AC77-BA349C116DC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8B73B8B1-D488-4AA2-989E-9B6B0EE3E556}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoderePlaytech", "CoderePlaytech", "{4ECF1EEC-E749-446E-AFD5-3B50A18B318F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CajaCodere", "CajaCodere", "{91C114EC-F22F-4847-9F82-A0D8913DF714}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +48,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A2F8EAF-EFA8-4A46-A70D-CC05EAD9B60C} = {4ECF1EEC-E749-446E-AFD5-3B50A18B318F}
+		{2A57B810-9F3F-4F41-A274-E51699496142} = {4ECF1EEC-E749-446E-AFD5-3B50A18B318F}
+		{B07481BD-7204-48E9-BF75-4D70884C65E2} = {4ECF1EEC-E749-446E-AFD5-3B50A18B318F}
+		{D8A52CD4-1E02-4399-B1FA-4CB45642EB1E} = {4ECF1EEC-E749-446E-AFD5-3B50A18B318F}
+		{2601C13D-3CA8-42A9-AC77-BA349C116DC4} = {91C114EC-F22F-4847-9F82-A0D8913DF714}
+		{4ECF1EEC-E749-446E-AFD5-3B50A18B318F} = {8B73B8B1-D488-4AA2-989E-9B6B0EE3E556}
+		{91C114EC-F22F-4847-9F82-A0D8913DF714} = {8B73B8B1-D488-4AA2-989E-9B6B0EE3E556}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CDC26576-E327-4AFB-9301-6BF92157ADC0}

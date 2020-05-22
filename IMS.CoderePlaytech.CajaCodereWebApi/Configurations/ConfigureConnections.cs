@@ -1,10 +1,7 @@
-﻿namespace IMS.CoderePlaytech.CajaCodereWebApi.Configurations
+﻿namespace IMS.CajaCodere.API.Configurations
 {
     #region Using
 
-    using IMS.CoderePlaytech.Infrastructure;
-    using IMS.CoderePlaytech.WebApi.Helpers;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -14,11 +11,11 @@
     {
         public static IServiceCollection AddConnectionProvider(this IServiceCollection services, IConfiguration configuration)
         {
-            var infrastructureSection = configuration.GetSection("Infrastructure");
-            services.Configure<InfrastructureAppSettings>(infrastructureSection);
-            var infrastructure = infrastructureSection.Get<InfrastructureAppSettings>();
+            //var infrastructureSection = configuration.GetSection("Infrastructure");
+            //services.Configure<InfrastructureAppSettings>(infrastructureSection);
+            //var infrastructure = infrastructureSection.Get<InfrastructureAppSettings>();
 
-            services.AddDbContextPool<EFContextSQL>(options => options.UseSqlServer(infrastructure.ConnectionString));
+            //services.AddDbContextPool<EFContextSQL>(options => options.UseSqlServer(infrastructure.ConnectionString));
 
             return services;
         }

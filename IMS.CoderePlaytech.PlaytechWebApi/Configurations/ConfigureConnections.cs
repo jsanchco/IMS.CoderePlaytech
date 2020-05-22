@@ -1,4 +1,4 @@
-﻿namespace IMS.CoderePlaytech.PlaytechWebApi.Configurations
+﻿namespace IMS.CoderePlaytech.API.Configurations
 {
     #region Using
 

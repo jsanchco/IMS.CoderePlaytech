@@ -1,4 +1,4 @@
-﻿namespace IMS.CoderePlaytech.PlaytechWebApi.Models
+﻿namespace IMS.CoderePlaytech.API.Models
 {
     public class Login
     {

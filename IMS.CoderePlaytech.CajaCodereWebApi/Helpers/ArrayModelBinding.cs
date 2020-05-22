@@ -1,4 +1,4 @@
-﻿namespace IMS.CoderePlaytech.CajaCodereWebApi.Helpers
+﻿namespace IMS.CajaCodere.API.Helpers
 {
     #region Using
 
