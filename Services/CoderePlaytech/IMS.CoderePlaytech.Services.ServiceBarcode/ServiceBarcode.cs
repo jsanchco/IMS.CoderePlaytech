@@ -50,8 +50,9 @@
                 BarcodeTypeId = 1,
                 Code = barcode,
                 CreationDate = DateTime.Now,
-                ExpirationDate = DateTime.Now.AddSeconds(expirationTimeSeconds)
-            });
+                ExpirationDate = DateTime.Now.AddSeconds(expirationTimeSeconds),
+                BarcodeStateId = 1
+        });
 
             var templateBarcode = await Utils.GetTemplateBarcode(barcode); 
             return result.Result

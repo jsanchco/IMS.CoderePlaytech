@@ -20,10 +20,15 @@
         public DateTime CreationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public double Amount { get; set; }
+        public DateTime? RequestDate { get; set; }
 
         public int BarcodeTypeId { get; set; }
         [ForeignKey("BarcodeTypeId")]
         public BarcodeType BarcodeType { get; set; }
-             
+
+        public int BarcodeStateId { get; set; } = 1;
+        [ForeignKey("BarcodeStateId")]
+        public BarcodeState BarcodeState { get; set; }
+
     }
 }

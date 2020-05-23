@@ -29,6 +29,9 @@ namespace IMS.CoderePlaytech.Infrastructure.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<int>("BarcodeStateId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BarcodeTypeId")
                         .HasColumnType("int");
 
@@ -42,15 +45,53 @@ namespace IMS.CoderePlaytech.Infrastructure.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("RequestDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BarcodeStateId");
+
                     b.HasIndex("BarcodeTypeId");
 
                     b.ToTable("Barcodes");
+                });
+
+            modelBuilder.Entity("IMS.CoderePlaytech.Domain.Entities.BarcodeState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BarcodeStates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Waiting"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Used"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Expired"
+                        });
                 });
 
             modelBuilder.Entity("IMS.CoderePlaytech.Domain.Entities.BarcodeType", b =>
@@ -83,8 +124,14 @@ namespace IMS.CoderePlaytech.Infrastructure.Migrations
 
             modelBuilder.Entity("IMS.CoderePlaytech.Domain.Entities.Barcode", b =>
                 {
+                    b.HasOne("IMS.CoderePlaytech.Domain.Entities.BarcodeState", "BarcodeState")
+                        .WithMany("Barcodes")
+                        .HasForeignKey("BarcodeStateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("IMS.CoderePlaytech.Domain.Entities.BarcodeType", "BarcodeType")
-                        .WithMany("Users")
+                        .WithMany("Barcodes")
                         .HasForeignKey("BarcodeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

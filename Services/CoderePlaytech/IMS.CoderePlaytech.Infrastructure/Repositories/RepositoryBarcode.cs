@@ -59,20 +59,31 @@
         public IQueryable<Barcode> GetAll()
         {
             return _context.Barcodes
-                .Include(x => x.BarcodeType);
+                .Include(x => x.BarcodeType)
+                .Include(x => x.BarcodeState);
         }
 
         public IQueryable<Barcode> GetByBarcodeType(int typeId)
         {
             return _context.Barcodes
                 .Include(x => x.BarcodeType)
+                .Include(x => x.BarcodeState)
                 .Where(x => x.BarcodeTypeId == typeId);
+        }
+
+        public IQueryable<Barcode> GetByBarcodeState(int stateId)
+        {
+            return _context.Barcodes
+                .Include(x => x.BarcodeType)
+                .Include(x => x.BarcodeState)
+                .Where(x => x.BarcodeStateId == stateId);
         }
 
         public Barcode GetByCode(string username, string code)
         {
             return _context.Barcodes
                 .Include(x => x.BarcodeType)
+                .Include(x => x.BarcodeState)
                 .FirstOrDefault(x => x.Username == username && x.Code == code);
         }
 
@@ -80,6 +91,7 @@
         {
             return await _context.Barcodes
                 .Include(x => x.BarcodeType)
+                .Include(x => x.BarcodeState)
                 .FirstOrDefaultAsync(x => x.Username == username && x.Code == code);
         }
 

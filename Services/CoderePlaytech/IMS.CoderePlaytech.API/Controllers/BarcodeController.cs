@@ -2,6 +2,7 @@
 {
     #region Using
 
+    using AutoMapper;
     using IMS.CoderePlaytech.Domain.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,13 @@
         private readonly IServiceBarcode _serviceBarcode;
         private readonly ILogger<BarcodeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
         public BarcodeController(
              ILogger<BarcodeController> logger,
              IServiceBarcode serviceBarcode,
-             IConfiguration configuration
+             IConfiguration configuration,
+             IMapper mapper
             )
         {
             _logger = logger ??
@@ -34,6 +37,9 @@
 
             _configuration = configuration ??
                 throw new ArgumentNullException(nameof(configuration));
+
+            _mapper = mapper ??
+                throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet("GenDepositBarcode")]

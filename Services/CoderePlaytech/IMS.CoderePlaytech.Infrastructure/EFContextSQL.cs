@@ -15,6 +15,7 @@
 
         public virtual DbSet<Barcode> Barcodes { get; set; }
         public virtual DbSet<BarcodeType> BarcodeTypes { get; set; }
+        public virtual DbSet<BarcodeState> BarcodeStates { get; set; }
 
         public static long InstanceCount;
 

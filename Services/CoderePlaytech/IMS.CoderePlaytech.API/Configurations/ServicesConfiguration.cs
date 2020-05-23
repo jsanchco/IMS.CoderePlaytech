@@ -4,6 +4,7 @@
 
     using IMS.CoderePlaytech.Domain.Repositories;
     using IMS.CoderePlaytech.Domain.Services;
+    using IMS.CoderePlaytech.Infrastructure.Repositories;
     using IMS.CoderePlaytech.Repositories.Infrastructure;
     using IMS.CoderePlaytech.Services.ServiceBarcode;
     using IMS.CoderePlaytech.WebApi.Helpers;
@@ -22,7 +23,8 @@
         {
             services
                 .AddScoped<IRepositoryBarcode, RepositoryBarcode>()
-                .AddScoped<IRepositoryBarcodeType, RepositoryBarcodeType>();
+                .AddScoped<IRepositoryBarcodeType, RepositoryBarcodeType>()
+                .AddScoped<IRepositoryBarcodeState, RepositoryBarcodeState>();
 
             return services;
         }

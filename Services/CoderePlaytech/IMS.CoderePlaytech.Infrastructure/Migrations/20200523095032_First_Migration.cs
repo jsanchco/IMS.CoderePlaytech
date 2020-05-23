@@ -8,6 +8,19 @@ namespace IMS.CoderePlaytech.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "BarcodeStates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarcodeStates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BarcodeTypes",
                 columns: table => new
                 {
@@ -31,11 +44,19 @@ namespace IMS.CoderePlaytech.Infrastructure.Migrations
                     CreationDate = table.Column<DateTime>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<double>(nullable: false),
-                    BarcodeTypeId = table.Column<int>(nullable: false)
+                    RequestDate = table.Column<DateTime>(nullable: true),
+                    BarcodeTypeId = table.Column<int>(nullable: false),
+                    BarcodeStateId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Barcodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Barcodes_BarcodeStates_BarcodeStateId",
+                        column: x => x.BarcodeStateId,
+                        principalTable: "BarcodeStates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Barcodes_BarcodeTypes_BarcodeTypeId",
                         column: x => x.BarcodeTypeId,
@@ -45,14 +66,28 @@ namespace IMS.CoderePlaytech.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "BarcodeTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Deposit" });
+                table: "BarcodeStates",
+                columns: new[] { "Id", "Description" },
+                values: new object[,]
+                {
+                    { 1, "Waiting" },
+                    { 2, "Used" },
+                    { 3, "Expired" }
+                });
 
             migrationBuilder.InsertData(
                 table: "BarcodeTypes",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Withdrawal" });
+                values: new object[,]
+                {
+                    { 1, "Deposit" },
+                    { 2, "Withdrawal" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Barcodes_BarcodeStateId",
+                table: "Barcodes",
+                column: "BarcodeStateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Barcodes_BarcodeTypeId",
@@ -64,6 +99,9 @@ namespace IMS.CoderePlaytech.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Barcodes");
+
+            migrationBuilder.DropTable(
+                name: "BarcodeStates");
 
             migrationBuilder.DropTable(
                 name: "BarcodeTypes");

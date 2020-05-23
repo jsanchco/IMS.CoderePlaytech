@@ -8,13 +8,13 @@
 
     #endregion
 
-    public class BarcodeType
+    public class BarcodeState
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string Description { get; set; }
 
         public ICollection<Barcode> Barcodes { get; set; } = new HashSet<Barcode>();
     }

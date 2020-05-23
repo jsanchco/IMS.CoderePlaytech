@@ -16,6 +16,12 @@
                 new BarcodeType { Id = 1, Name = "Deposit" },
                 new BarcodeType { Id = 2, Name = "Withdrawal" }
             );
+
+            modelBuilder.Entity<BarcodeState>().HasData(
+                new BarcodeState { Id = 1, Description = "Waiting" },
+                new BarcodeState { Id = 2, Description = "Used" },
+                new BarcodeState { Id = 3, Description = "Expired" }
+            );
         }
     }
 }
