@@ -2,6 +2,7 @@
 {
     #region Using
 
+    using IMS.CoderePlaytech.Domain.Entities;
     using IMS.CoderePlaytech.Domain.Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -11,5 +12,6 @@
     public interface IServiceBarcode
     {
         Task<ResultRequest<string>> GenDepositBarcode(string user, CancellationToken ct = default);
+        ResultRequest<Barcode> TestPolly(string user, string barcode);
     }
 }

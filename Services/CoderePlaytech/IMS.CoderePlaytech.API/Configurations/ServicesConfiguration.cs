@@ -13,6 +13,10 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Newtonsoft.Json;
+    using Polly;
+    using Polly.Extensions.Http;
+    using System;
+    using System.Net.Http;
     using System.Text;
 
     #endregion
@@ -83,5 +87,22 @@
                     .AllowAnyOrigin()
                     .Build());
             });
+
+        public static IServiceCollection AddPolly(this IServiceCollection services)
+        {
+            services.AddHttpClient<IServiceBarcode, ServiceBarcode>()
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+
+            return services;
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+                .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
+                                                                            retryAttempt)));
+        }
     }
 }

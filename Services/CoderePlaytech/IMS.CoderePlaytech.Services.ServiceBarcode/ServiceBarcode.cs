@@ -59,5 +59,13 @@
                 ? new ResultRequest<string> { isSuccessful = true, data = templateBarcode }
                 : new ResultRequest<string> { isSuccessful = false, data = null };
         }
+
+        public ResultRequest<Barcode> TestPolly(string user, string barcode)
+        {
+            var barcodeExists = _repositoryBarcode.GetByCode(user, barcode);
+            return barcodeExists != null
+                ? new ResultRequest<Barcode> { isSuccessful = true, data = barcodeExists }
+                : new ResultRequest<Barcode> { isSuccessful = false, data = null };
+        }
     }
 }

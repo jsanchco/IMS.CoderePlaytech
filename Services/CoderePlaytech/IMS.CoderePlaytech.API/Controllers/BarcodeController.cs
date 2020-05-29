@@ -3,6 +3,7 @@
     #region Using
 
     using AutoMapper;
+    using IMS.CoderePlaytech.Domain.Models;
     using IMS.CoderePlaytech.Domain.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,27 @@
                 }
 
                 return Ok(resultRequest.data);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception: ");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet("TestPolly")]
+        public IActionResult TestPolly(string user, string barcode)
+        {
+            try
+            {
+                var resultRequest = _serviceBarcode.TestPolly(user, barcode);
+
+                if (!resultRequest.isSuccessful)
+                {
+                    throw new Exception("Barcode not Found");
+                }
+
+                return Ok(_mapper.Map<BarcodeViewModel>(resultRequest.data));
             }
             catch (Exception ex)
             {
