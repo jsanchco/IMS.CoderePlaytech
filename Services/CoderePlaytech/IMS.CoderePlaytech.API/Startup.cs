@@ -34,18 +34,20 @@ namespace IMS.CoderePlaytech.API
 
             services.AddResponseCaching();
 
+            services.AddPolly();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddMvc().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
-            services
+            services           
                 .ConfigureRepositories()
                 .ConfigureServices()
                 .AddMiddleware()
                 .AddCorsConfiguration()
                 .AddConnectionProvider(Configuration)
-                .AddAuthentication(Configuration)
-                .AddMvc(option => option.EnableEndpointRouting = false);
+                .AddAuthentication(Configuration)               
+                .AddMvc(option => option.EnableEndpointRouting = false);         
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

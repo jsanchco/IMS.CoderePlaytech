@@ -10,25 +10,25 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using System;
+    using System.Net.Http;
     using System.Threading.Tasks;
 
     #endregion
 
     [Route("api/[controller]")]
     [ApiController]
-    public class BarcodeController : ControllerBase
+    public class TestPollyController : ControllerBase
     {
         private readonly IServiceBarcode _serviceBarcode;
         private readonly ILogger<BarcodeController> _logger;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public BarcodeController(
-             ILogger<BarcodeController> logger,
-             IServiceBarcode serviceBarcode,
-             IConfiguration configuration,
-             IMapper mapper
-            )
+        public TestPollyController(
+         ILogger<BarcodeController> logger,
+         IServiceBarcode serviceBarcode,
+         IHttpClientFactory httpClientFactory,
+         IMapper mapper)
         {
             _logger = logger ??
                 throw new ArgumentNullException(nameof(logger));
@@ -36,24 +36,24 @@
             _serviceBarcode = serviceBarcode ??
                 throw new ArgumentNullException(nameof(serviceBarcode));
 
-            _configuration = configuration ??
-                throw new ArgumentNullException(nameof(configuration));
+            _httpClientFactory = httpClientFactory ??
+                throw new ArgumentNullException(nameof(httpClientFactory));
 
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpGet("GenDepositBarcode")]
-        public async Task<IActionResult> GenDepositBarcode(string user)
+        [HttpGet("TestPolly")]
+        public async Task<IActionResult> TestPolly(string value)
         {
             try
             {
-                var resultRequest = await _serviceBarcode.GenDepositBarcode(user);
+                var resultRequest = await _serviceBarcode.TestPolly(value);
 
                 if (!resultRequest.isSuccessful)
                 {
-                    _logger.LogWarning("Error in GenDepositBarcode");
-                    return StatusCode(StatusCodes.Status409Conflict, $"Error in GenDepositBarcode");
+                    _logger.LogWarning($"Error in TestPolly: {resultRequest.statusError}");
+                    return StatusCode(StatusCodes.Status409Conflict, $"Error in TestPolly: {resultRequest.statusError}");
                 }
 
                 return Ok(resultRequest.data);
@@ -64,5 +64,16 @@
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        //[HttpGet("TestPolly")]
+        //public async Task<string> TestPolly(string value)
+        //{
+        //    var url = $"https://www.c-sharpcorner.com/mytestpagefor404";
+
+        //    var client = _httpClientFactory.CreateClient("csharpcorner");
+        //    var response = await client.GetAsync(url);
+        //    var result = await response.Content.ReadAsStringAsync();
+        //    return result;
+        //}
     }
 }

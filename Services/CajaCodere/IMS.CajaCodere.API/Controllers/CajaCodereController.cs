@@ -43,6 +43,20 @@
                 throw new ArgumentNullException(nameof(mapper));
         }
 
+        [HttpGet("Echo")]
+        public IActionResult Echo(string value)
+        {
+            try
+            {
+                return Ok(value);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception: ");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpGet("AddBalance")]
         public async Task<IActionResult> AddBalance(double amount, string username, string code)
         {

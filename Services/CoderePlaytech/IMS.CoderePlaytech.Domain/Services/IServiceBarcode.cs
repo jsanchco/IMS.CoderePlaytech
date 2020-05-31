@@ -12,6 +12,6 @@
     public interface IServiceBarcode
     {
         Task<ResultRequest<string>> GenDepositBarcode(string user, CancellationToken ct = default);
-        ResultRequest<Barcode> TestPolly(string user, string barcode);
+        Task<ResultRequest<string>> TestPolly(string value);
     }
 }

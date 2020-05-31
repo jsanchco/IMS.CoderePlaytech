@@ -90,8 +90,9 @@
 
         public static IServiceCollection AddPolly(this IServiceCollection services)
         {
-            services.AddHttpClient<IServiceBarcode, ServiceBarcode>()
-                    .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+            services.AddHttpClient("cajacodere")
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                .AddPolicyHandler(GetRetryPolicy());
 
             return services;
         }
@@ -100,9 +101,10 @@
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
-                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-                .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
-                                                                            retryAttempt)));
+                .OrResult(msg =>
+                    msg.StatusCode == System.Net.HttpStatusCode.NotFound ||
+                    msg.StatusCode == System.Net.HttpStatusCode.BadGateway)
+                .WaitAndRetryAsync(2, retryAttempt => TimeSpan.FromSeconds(30));
         }
     }
 }
