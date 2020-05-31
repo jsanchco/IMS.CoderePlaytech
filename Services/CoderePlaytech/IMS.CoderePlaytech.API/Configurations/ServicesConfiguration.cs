@@ -7,6 +7,7 @@
     using IMS.CoderePlaytech.Infrastructure.Repositories;
     using IMS.CoderePlaytech.Repositories.Infrastructure;
     using IMS.CoderePlaytech.Services.ServiceBarcode;
+    using IMS.CoderePlaytech.Services.ServiceEcho;
     using IMS.CoderePlaytech.WebApi.Helpers;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
@@ -36,7 +37,8 @@
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services
-                .AddScoped<IServiceBarcode, ServiceBarcode>();
+                .AddScoped<IServiceBarcode, ServiceBarcode>()
+                .AddScoped<IServiceEcho, ServiceEcho>();
 
             return services;
         }

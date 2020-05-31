@@ -82,21 +82,5 @@
         //        ? new ResultRequest<string> { isSuccessful = true, data = response.Content }
         //        : new ResultRequest<string> { isSuccessful = false, data = null };
         //}
-
-        public async Task<ResultRequest<string>> TestPolly(string value)
-        {
-            var url = $"https://localhost:44345/api/CajaCodere/Echo?value={value}";
-
-            //HttpClient client = _clientFactory != null ?
-            //    _clientFactory.CreateClient("cajacodere") :
-            //    new HttpClient();
-
-            var client = _clientFactory.CreateClient("cajacodere");
-            var response = await client.GetAsync(url);
-
-            return response.IsSuccessStatusCode
-                ? new ResultRequest<string> { isSuccessful = true, data = await response.Content.ReadAsStringAsync() }
-                : new ResultRequest<string> { isSuccessful = false, data = null };
-        }
     }
 }
