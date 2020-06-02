@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Services\CoderePlaytech\IMS.CoderePlaytech.Domain\IMS.CoderePlaytech.Domain.csproj" />
+    <ProjectReference Include="..\IMS.CoderePlaytech.Domain\IMS.CoderePlaytech.Domain.csproj" />
   </ItemGroup>
 
 </Project>

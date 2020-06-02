@@ -71,7 +71,7 @@
             }
 
             if (response == null)
-                return new ResultRequest<string> { isSuccessful = false, data = null };
+                return new ResultRequest<string> { isSuccessful = false, data = null, statusError = "Max retry scope" };
 
             return response.IsSuccessStatusCode
                 ? new ResultRequest<string> { isSuccessful = true, data = await response.Content.ReadAsStringAsync() }
